@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package api.student.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "verify-code/api/student/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.student.v1";
+
+service Student {
+	rpc CallStudent (CallStudentRequest) returns (CallStudentReply){
+		option (google.api.http) = {
+			get: "/v1/student/{name}/{age}"
+			//附加接口
+			additional_bindings{
+				//post
+				post: "/v1/student"
+				body: "*",
+			}
+		};
+	};
+
+}
+message CallStudentRequest{
+	string name=1;
+	uint32 age=2;
+}
+message CallStudentReply{
+	string message=1;
+}
